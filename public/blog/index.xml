@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Blogs on EL MAHDI</title>
+    <link>https://el_mahdi.github.io/blog/</link>
+    <description>Recent content in Blogs on EL MAHDI</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Sat, 07 May 2022 12:49:39 +0000</lastBuildDate>
+    
+	<atom:link href="https://el_mahdi.github.io/blog/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Tokenizator</title>
+      <link>https://el_mahdi.github.io/blog/tokenizator/</link>
+      <pubDate>Sat, 07 May 2022 12:49:39 +0000</pubDate>
+      
+      <guid>https://el_mahdi.github.io/blog/tokenizator/</guid>
+      <description>Restore Tokenizator Keys Tokenizator is a Google chrome app that allow you to generate MFA/ one time password with the same algo as google Authenticator,
+⚠ WARNING : is not meant for sensitive/production Keys , as mentioned by the Author :
+ this application should not be used to generate sensitive codes because keeping them in your computer may cause a security issue, i recommend using this application only to test a service or to develop solutions that involve the Google Authenticator.</description>
+    </item>
+    
+  </channel>
+</rss>

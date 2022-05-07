@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang=""><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Tokenizator</title>
+    <meta name="description" content="">
+    <meta name="author" content=''>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/sass/researcher.min.css">
+
+    
+
+    
+        
+    
+</head>
+
+    <body><div class="container mt-5">
+    <nav class="navbar navbar-expand-sm flex-column flex-sm-row text-nowrap p-0">
+        <a class="navbar-brand mx-0 mr-sm-auto" href="https://el_mahdi.github.io/" title="EL MAHDI">
+          
+          EL MAHDI
+        </a>
+        <div class="navbar-nav flex-row flex-wrap justify-content-center">
+            
+                
+                
+                    <a class="nav-item nav-link" href="/" title="About">
+                        About
+                    </a>
+                    
+                        <span class="nav-item navbar-text mx-1">/</span>
+                    
+                
+                    <a class="nav-item nav-link" href="/blog" title="Blog">
+                        Blog
+                    </a>
+                    
+                
+            
+        </div>
+    </nav>
+</div>
+<hr>
+<div id="content">
+<div class="container">
+    <h2 id="restore-tokenizator-keys">Restore Tokenizator Keys</h2>
+<p>Tokenizator is a Google chrome app that allow you to generate MFA/ one time password with the same algo as google Authenticator,<br>
+<strong>⚠ WARNING :</strong> is not meant for sensitive/production Keys , as mentioned by the Author :</p>
+<blockquote>
+<p>this application should not be used to generate sensitive codes because keeping them in your computer may cause a security issue, i recommend using this application only to test a service or to develop solutions that involve the Google Authenticator.</p>
+</blockquote>
+<p>I&rsquo;v been using Tokenizator for more than a year , haven&rsquo;t had any issues , easy UI &amp; Usage .<br>
+After some time it was time for me to change my machine, here i was stuck !!, as tokenizator has no way to export keys and i haven&rsquo;t found any workaround online ,<br>
+<em>PI : ( an issue is open for this matter )</em> .<br>
+So i had to find a Solution/workaroud for this issue , i started looking at the app code , available on <a href="https://github.com/arosemena/Tokenizator">github</a> , checking for how the keys are stored .<br>
+on the app Js file we have this function that looked interesting  :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript">
+  <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">saveToken</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">function</span>(){
+    <span style="color:#66d9ef">if</span>(<span style="color:#66d9ef">typeof</span> <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">secret</span> <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;undefined&#39;</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">secret</span>.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span>) {
+      <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">secret</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">secret</span>.<span style="color:#a6e22e">replace</span>(<span style="color:#e6db74">&#39; &#39;</span>, <span style="color:#e6db74">&#39;&#39;</span>);
+      <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">key</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">auth</span>(<span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>.<span style="color:#a6e22e">secret</span>, <span style="color:#a6e22e">epoch</span>());
+      <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">appData</span>.<span style="color:#a6e22e">keys</span>.<span style="color:#a6e22e">push</span>(<span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span>);
+      <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">page</span>.<span style="color:#a6e22e">active</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;password&#39;</span>;
+      <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">entry</span> <span style="color:#f92672">=</span> {};
+      <span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">storage</span>.<span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">set</span>({<span style="color:#e6db74">&#39;appData&#39;</span> <span style="color:#f92672">:</span> <span style="color:#a6e22e">$scope</span>.<span style="color:#a6e22e">appData</span>});
+    }
+  }
+
+</code></pre></div><p>The keys are stored locally 🤔 , this relate with the author note <code>...keeping them in your computer...</code>
+i stated looking for ways to retrieve stored values from local storage,<br>
+On the way :</p>
+<ul>
+<li>I learned how to <code>inspect element</code> like on chrome apps  :
+<ul>
+<li>Go to <code>chrome://extensions/</code> and click on the desired app <strong>Details</strong></li>
+<li>Run the app and  find  <strong>Inspect views</strong> and choose the app .
+<img src="/Inspect_Views.png" alt="Inspect_views">
+<img src="/Inspect_Views1.png" alt="Inspect_views2"></li>
+</ul>
+</li>
+</ul>
+<p>In order to restore the keys , we have to run js code on the running app, and <code>Inspect views</code> allows us to do so .<br>
+now go to <code>console</code> and run 👇 to list the stored keys :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-javascript" data-lang="javascript"><span style="color:#a6e22e">chrome</span>.<span style="color:#a6e22e">storage</span>.<span style="color:#a6e22e">local</span>.<span style="color:#a6e22e">get</span>(<span style="color:#66d9ef">null</span>, <span style="color:#66d9ef">function</span> (<span style="color:#a6e22e">data</span>) { <span style="color:#a6e22e">console</span>.<span style="color:#a6e22e">info</span>(<span style="color:#a6e22e">data</span>) });
+</code></pre></div><p><img src="/Restore_keys.png" alt="Get_keys"></p>
+<p>And congrats 🎉 you restored you keys ,
+the keys will look smthg like :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-json" data-lang="json">{
+    <span style="color:#f92672">&#34;keys&#34;</span>: [
+        {
+            <span style="color:#f92672">&#34;key&#34;</span>: <span style="color:#e6db74">&#34;1****4&#34;</span>,
+            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;****_cloud&#34;</span>,
+            <span style="color:#f92672">&#34;secret&#34;</span>: <span style="color:#e6db74">&#34;R4O******************************NIB&#34;</span>
+        },
+        {
+            <span style="color:#f92672">&#34;key&#34;</span>: <span style="color:#e6db74">&#34;0****4&#34;</span>,
+            <span style="color:#f92672">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;APP1&#34;</span>,
+            <span style="color:#f92672">&#34;secret&#34;</span>: <span style="color:#e6db74">&#34;V**********************************C5&#34;</span>
+        }
+    ]
+}
+</code></pre></div>
+</div>
+
+        </div><div id="footer" class="mb-5">
+    <hr>
+    
+    <div class="container text-center">
+        
+            <a href="https://twitter.com/" class="fab fa-twitter fa-1x" title="Twitter"></a>
+        
+            <a href="mailto:mail@example.com" class="fas fa-envelope fa-1x" title="E-mail"></a>
+        
+    </div>
+    
+    
+</div>
+</body>
+</html>
